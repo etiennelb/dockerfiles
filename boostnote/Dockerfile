@@ -1,4 +1,5 @@
 FROM debian:stretch
+LABEL maintainer "Etienne LE BELLEGUY <hello@etiennelb.com>"
 
 RUN apt-get update
 RUN apt-get install -y \
@@ -37,5 +38,10 @@ RUN buildDeps=' \
 	&& rm -rf /tmp/*.deb \
 	&& apt-get purge -y --auto-remove $buildDeps
 
+COPY entrypoint.sh /
 
-ENTRYPOINT [ "boostnote"]
+RUN chmod +x /entrypoint.sh
+
+ENV LANG=fr_FR.UTF-8
+
+ENTRYPOINT [ "/entrypoint.sh"]
